@@ -38,6 +38,7 @@ void setup ()
   led_strip.begin ();
 
   Serial.begin(9600);
+  Theme::switch_every (THEME_SWITCH_DELAY);
 }
 
 
@@ -47,7 +48,6 @@ void setup ()
 void loop ()
 {
   // Switch themes every {x} seconds
-  Theme::switch_every (THEME_SWITCH_DELAY);
 
   whole_loop.clear ();
 

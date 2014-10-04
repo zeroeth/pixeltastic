@@ -53,23 +53,30 @@ void StripView::draw ()
   // Draw every spot
   for (uint8_t i = 0; i < spot_count; i++)
   {
-    //spots[i]->update ();
+	// FIXME uint8 limits size for larger projects.
+	uint8_t width;
 
-	// TODO add fluid width version
+	// Fluid (0.0->1.0) vs Fixed (pixel count) widths
+	if(spots[i]->fixed_width)
+	{
+		width = spots[i]->width();
+	}
+	else
+	{
+		width = spots[i]->fluid_width() * length;
+	}
 
     // For width of the spot
-    for (uint8_t w = 0; w < spots[i]->width(); w++)
+    for (uint8_t w = 0; w < width; w++)
     {
       // Map position to strip
-	  // BUGFIX 1: sign flipping when storing value in uint8
       int8_t view_position = int(spots[i]->position() * length) + w;
 
       // Center width
-      view_position -= spots[i]->width()/2;
+      view_position -= width/2;
 
       // Wrap around the segment
-	  // BUGFIX 1: negative number modulus logic fix
-      draw_at (modulo(view_position,length) + starting_led, spots[i]->color);
+      draw_at (modulo(view_position,length) + starting_led, spots[i]->color());
     }
   }
 }

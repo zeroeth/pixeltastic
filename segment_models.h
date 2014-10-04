@@ -13,11 +13,13 @@ class Spot {
 
   // Variables
   double   _position;
-  double   speed;
+  double   _speed;
   double   amplitude;
-  double   offset;
+  double   _offset;
   uint8_t  _width;
-  uint32_t color;
+  double   _fluid_width;
+  bool     fixed_width;
+  uint32_t _color;
 
   double   start_position;
   uint8_t  start_width;
@@ -32,15 +34,23 @@ class Spot {
   virtual void update ();
   double percent ();
 
-  // Setters
-  double   position (double  );
+  // Accessors
+  double   position (double);
   double   position ();
 
-  uint8_t  width (uint8_t );
+  double   width (double);
+  uint8_t  width (int);
   uint8_t  width ();
+  double   fluid_width ();
 
-  //uint32_t color    (uint32_t);
+  uint32_t color (uint32_t);
+  uint32_t color ();
 
+  double   offset (double);
+  double   offset ();
+
+  double   speed ();
+  double   speed (double);
 };
 
 
@@ -106,10 +116,11 @@ class Colortron : public Spot {
  public:
 
   // Constructor
-  Colortron (uint8_t, uint32_t);
+  Colortron ();
 
   // Methods
   void update ();
+  double offset(double);
 };
 
 

@@ -57,7 +57,7 @@ namespace Theme {
     Circler* circle3 = new Circler (/* position */ 0.0,
                                     /* width    */ 4,
                                     /* color    */ red);
-	circle3->speed = 0.1;
+	circle3->speed(0.1);
 
     outer_ring.add (circle1);
     inner_ring.add (circle2);
@@ -81,9 +81,9 @@ namespace Theme {
                                     /* width    */ 1,
                                     /* color    */ white);
 
-	wobble0->speed = 0.5;
-	wobble1->speed = 0.5;
-	wobble2->speed = 0.5;
+	wobble0->speed(0.5);
+	wobble1->speed(0.5);
+	wobble2->speed(0.5);
 
     outer_ring.add (wobble0);
     outer_ring.add (wobble1);
@@ -116,12 +116,12 @@ namespace Theme {
 
 	// TODO api 2.. shared 'speed' for multiples?
 
-	circle1->speed = 0.3;
-	circle2->speed = 0.3;
-	circle3->speed = 0.3;
-	circle4->speed = 0.3;
-	circle5->speed = 0.3;
-	circle6->speed = 0.3;
+	circle1->speed(0.3);
+	circle2->speed(0.3);
+	circle3->speed(0.3);
+	circle4->speed(0.3);
+	circle5->speed(0.3);
+	circle6->speed(0.3);
 
     inner_ring.add(circle1);
     inner_ring.add(circle2);
@@ -172,24 +172,56 @@ namespace Theme {
 	Warper* warper = new Warper ( );
 
 	warper->position ( 0.0  );
-	warper->width    ( 5    );
-//	warper->color    ( blue );
+	warper->width    ( 6    );
+	warper->color    ( blue );
+
+	Warper* warper2 = new Warper ( );
+
+	warper2->position ( 0.0 );
+	warper2->width    ( 2   );
+	warper2->color    ( magenta );
+	// should 2 mean 2x?
+	warper2->speed    ( 1/3.0 );
 
 
-	Colortron* colortron = new Colortron (5, blue);
+	// TODO make these 'pulse' and fade out every second
+
+	Colortron* colortron = new Colortron ( );
 
 	colortron->position ( 0.0  );
-//	colortron->width    ( 0.5  );
-//	colortron->color    ( blue );
+	colortron->width    ( 0.25 );
 
+	Colortron* colortron2 = new Colortron ( );
+
+	colortron2->position ( 0.25 );
+	colortron2->width    ( 0.25 );
+	colortron2->offset   ( 0.1  );
+
+	Colortron* colortron3 = new Colortron ( );
+
+	colortron3->position ( 0.5  );
+	colortron3->width    ( 0.25 );
+	colortron3->offset   ( 0.2  );
+
+	Colortron* colortron4 = new Colortron ( );
+
+	colortron4->position ( 0.75 );
+	colortron4->width    ( 0.25 );
+	colortron4->offset   ( 0.3  );
 
 	inner_ring.add (warper);
+	inner_ring.add (warper2);
 	outer_ring.add (colortron);
+	outer_ring.add (colortron2);
+	outer_ring.add (colortron3);
+	outer_ring.add (colortron4);
   }
 
 
   void switch_every (uint16_t delay)
   {
+	  theme5();
+	  /*
     if(millis() - last_millis > delay)
     {
       last_millis = millis();
@@ -222,6 +254,6 @@ namespace Theme {
 
       //current_theme++;
       //current_theme %= 4;
-    }
+    } */
   }
 }

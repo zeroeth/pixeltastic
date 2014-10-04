@@ -9,10 +9,12 @@
 Spot::Spot (double n_position, uint8_t n_width, uint32_t n_color):
   _position (n_position),
   _width    (n_width),
-  color     (n_color), /* Initializer list */
-  speed     (1.0),
+  _color    (n_color), /* Initializer list */
+  _speed    (1.0),
   amplitude (1.0),
-  offset    (0.0)
+  _offset   (0.0),
+  _fluid_width (0.0),
+  fixed_width  (false)
 {
 }
 
@@ -27,14 +29,19 @@ void Spot::update () { }
 
 double Spot::percent ()
 {
-  return (int((millis() * speed) + (offset*1000)) % 1000) * 0.001;
+  return (int((millis() * _speed) + (_offset*1000)) % 1000) * 0.001;
 }
 
-// Getters
+// Accessors
 
 double Spot::position()
 {
 	return _position;
+}
+
+double Spot::position(double n_position)
+{
+	return _position = n_position;
 }
 
 
@@ -43,19 +50,55 @@ uint8_t Spot::width()
 	return _width;
 }
 
-// Setters
-
-double Spot::position(double n_position)
+uint8_t Spot::width(int n_width)
 {
-	return _position = n_position;
-}
-
-
-uint8_t Spot::width(uint8_t n_width)
-{
+	fixed_width = true;
 	return _width = n_width;
 }
 
+double Spot::width(double n_width)
+{
+	fixed_width = false;
+	return _fluid_width = n_width;
+}
+
+double Spot::fluid_width()
+{
+	return _fluid_width;
+}
+
+
+uint32_t Spot::color()
+{
+	return _color;
+}
+
+uint32_t Spot::color(uint32_t n_color)
+{
+	return _color = n_color;
+}
+
+
+double Spot::offset()
+{
+	return _offset;
+}
+
+double Spot::offset(double n_offset)
+{
+	return _offset = n_offset;
+}
+
+
+double Spot::speed()
+{
+	return _speed;
+}
+
+double Spot::speed(double n_speed)
+{
+	return _speed = n_speed;
+}
 
 /*** Circler Methods ******************************************/
 
@@ -109,7 +152,7 @@ void Wobbler::update ()
 Pulsar::Pulsar (double n_position, uint8_t n_width, uint32_t n_color):
   Spot(n_position, n_width, n_color) /* Base Class Constructor */
 {
-  start_color = color;
+  start_color = _color;
 }
 
 void Pulsar::update ()
@@ -127,7 +170,7 @@ void Pulsar::update ()
   b = (uint8_t)(start_color >>  0);
 
   // Dim brightness
-  color = led_strip.Color (r * value, g * value, b * value);
+  _color = led_strip.Color (r * value, g * value, b * value);
 }
 
 
@@ -139,6 +182,7 @@ void Pulsar::update ()
 Grower::Grower (double n_position, uint8_t n_width, uint32_t n_color):
   Spot(n_position, n_width, n_color) /* Base Class Constructor */
 {
+	// FIXME fluid width version
   start_width = _width;
 }
 
@@ -166,7 +210,7 @@ Warper::Warper ( ):
 
 void Warper::update ()
 {
-	if(millis() - tick_start > speed * 1000)
+	if(millis() - tick_start > _speed * 1000)
 	{
 		tick_start = millis();
 		_position = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
@@ -175,20 +219,28 @@ void Warper::update ()
 
 /*** Colortron Methods ********************************************/
 
-Colortron::Colortron (uint8_t n_width, uint32_t n_color):
-  Spot(0.0, n_width, n_color) /* Base Class Constructor */
+Colortron::Colortron ():
+  Spot(0.0, 1, led_strip.Color (5, 0, 5)) /* Base Class Constructor */
 {
 	tick_start = millis();
+}
+
+double Colortron::offset(double n_offset)
+{
+	// FIXME call parent setter first
+	tick_start = millis() - (n_offset * 1000);
+	return _offset = n_offset;
 }
 
 void Colortron::update ()
 {
 	// TODO take into account offset (for chained delays) and amplitude (variation)
-	if(millis() - tick_start > speed * 1000)
+	// FIXME avoid 'start' time issues by always using a sin of mod 1000 ?
+	if(millis() - tick_start > _speed * 1000)
 	{
 		tick_start = millis();
 
-		color = led_strip.Color (rand() % 10, rand() % 10, rand() % 10);
+		_color = led_strip.Color (rand() % 10, rand() % 10, rand() % 10);
 	}
 }
 
