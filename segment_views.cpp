@@ -58,14 +58,14 @@ void StripView::draw ()
 	// TODO add fluid width version
 
     // For width of the spot
-    for (uint8_t w = 0; w < spots[i]->width; w++)
+    for (uint8_t w = 0; w < spots[i]->width(); w++)
     {
       // Map position to strip
 	  // BUGFIX 1: sign flipping when storing value in uint8
       int8_t view_position = int(spots[i]->position() * length) + w;
 
       // Center width
-      view_position -= spots[i]->width/2;
+      view_position -= spots[i]->width()/2;
 
       // Wrap around the segment
 	  // BUGFIX 1: negative number modulus logic fix

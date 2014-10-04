@@ -16,7 +16,7 @@ class Spot {
   double   speed;
   double   amplitude;
   double   offset;
-  uint8_t  width;
+  uint8_t  _width;
   uint32_t color;
 
   double   start_position;
@@ -35,7 +35,10 @@ class Spot {
   // Setters
   double   position (double  );
   double   position ();
-  //uint8_t  width    (uint8_t );
+
+  uint8_t  width (uint8_t );
+  uint8_t  width ();
+
   //uint32_t color    (uint32_t);
 
 };

@@ -172,7 +172,7 @@ namespace Theme {
 	Warper* warper = new Warper ( );
 
 	warper->position ( 0.0  );
-//	warper->width    ( 5    );
+	warper->width    ( 5    );
 //	warper->color    ( blue );
 
 

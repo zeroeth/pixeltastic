@@ -8,7 +8,7 @@
 
 Spot::Spot (double n_position, uint8_t n_width, uint32_t n_color):
   _position (n_position),
-  width     (n_width),
+  _width    (n_width),
   color     (n_color), /* Initializer list */
   speed     (1.0),
   amplitude (1.0),
@@ -37,11 +37,23 @@ double Spot::position()
 	return _position;
 }
 
+
+uint8_t Spot::width()
+{
+	return _width;
+}
+
 // Setters
 
 double Spot::position(double n_position)
 {
 	return _position = n_position;
+}
+
+
+uint8_t Spot::width(uint8_t n_width)
+{
+	return _width = n_width;
 }
 
 
@@ -127,7 +139,7 @@ void Pulsar::update ()
 Grower::Grower (double n_position, uint8_t n_width, uint32_t n_color):
   Spot(n_position, n_width, n_color) /* Base Class Constructor */
 {
-  start_width = width;
+  start_width = _width;
 }
 
 void Grower::update ()
@@ -138,7 +150,7 @@ void Grower::update ()
   value = (sin(value) + 1) * 0.5;
 
   // Width 0 to 10
-  width = value * start_width;
+  _width = value * start_width;
 
 }
 
