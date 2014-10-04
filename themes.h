@@ -169,23 +169,19 @@ namespace Theme {
 
 
   void theme5() {
+	Warper* warper = new Warper ( );
 
-	Warper* warper = new Warper(1.0, 1, magenta);
-	warper->speed = 0.1;
+	warper->position ( 0.0  );
+//	warper->width    ( 5    );
+//	warper->color    ( blue );
 
-	Colortron* colortron = new Colortron(/* position */ 0.0,
-										 /* width    */ 6 /* 0.5 */,
-										 /* color    */ blue);
 
-	/*
-		warper->position = 0.0;
-		warper->width    = 0.5;
-		warper->color    = blue;
+	Colortron* colortron = new Colortron (5, blue);
 
-		warper->position ( 0.0  );
-		warper->width    ( 0.5  );
-		warper->color    ( blue );
-	 */
+	colortron->position ( 0.0  );
+//	colortron->width    ( 0.5  );
+//	colortron->color    ( blue );
+
 
 	inner_ring.add (warper);
 	outer_ring.add (colortron);

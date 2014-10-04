@@ -62,7 +62,7 @@ void StripView::draw ()
     {
       // Map position to strip
 	  // BUGFIX 1: sign flipping when storing value in uint8
-      int8_t view_position = int(spots[i]->position * length) + w;
+      int8_t view_position = int(spots[i]->position() * length) + w;
 
       // Center width
       view_position -= spots[i]->width/2;

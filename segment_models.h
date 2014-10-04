@@ -12,7 +12,7 @@ class Spot {
  public:
 
   // Variables
-  double   position;
+  double   _position;
   double   speed;
   double   amplitude;
   double   offset;
@@ -31,6 +31,13 @@ class Spot {
   // Methods
   virtual void update ();
   double percent ();
+
+  // Setters
+  double   position (double  );
+  double   position ();
+  //uint8_t  width    (uint8_t );
+  //uint32_t color    (uint32_t);
+
 };
 
 
@@ -96,7 +103,7 @@ class Colortron : public Spot {
  public:
 
   // Constructor
-  Colortron (double, uint8_t, uint32_t);
+  Colortron (uint8_t, uint32_t);
 
   // Methods
   void update ();
@@ -110,7 +117,7 @@ class Warper : public Spot {
  public:
 
   // Constructor
-  Warper (double, uint8_t, uint32_t);
+  Warper ();
 
   // Methods
   void update ();

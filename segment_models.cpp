@@ -7,7 +7,7 @@
 // Base Spot Constructor
 
 Spot::Spot (double n_position, uint8_t n_width, uint32_t n_color):
-  position  (n_position),
+  _position (n_position),
   width     (n_width),
   color     (n_color), /* Initializer list */
   speed     (1.0),
@@ -30,6 +30,20 @@ double Spot::percent ()
   return (int((millis() * speed) + (offset*1000)) % 1000) * 0.001;
 }
 
+// Getters
+
+double Spot::position()
+{
+	return _position;
+}
+
+// Setters
+
+double Spot::position(double n_position)
+{
+	return _position = n_position;
+}
+
 
 /*** Circler Methods ******************************************/
 
@@ -38,7 +52,7 @@ double Spot::percent ()
 Circler::Circler (double n_position, uint8_t n_width, uint32_t n_color):
   Spot(n_position, n_width, n_color) /* Base Class Constructor */
 {
-  start_position = position;
+  start_position = _position;
 }
 
 
@@ -46,7 +60,7 @@ Circler::Circler (double n_position, uint8_t n_width, uint32_t n_color):
 
 void Circler::update ()
 {
-  position = percent () + start_position;
+  _position = percent () + start_position;
 }
 
 
@@ -58,7 +72,7 @@ void Circler::update ()
 Wobbler::Wobbler (double n_position, uint8_t n_width, uint32_t n_color):
   Spot(n_position, n_width, n_color) /* Base Class Constructor */
 {
-  start_position = position;
+  start_position = _position;
 }
 
 
@@ -66,12 +80,12 @@ Wobbler::Wobbler (double n_position, uint8_t n_width, uint32_t n_color):
 void Wobbler::update ()
 {
   // Scale from 0 to 6.28 every second
-  position = percent () * M_PI * 2;
+  _position = percent () * M_PI * 2;
 
   // Scale -1/1 to 0/1
-  position  = (sin(position) + 1) * 0.5;
-  position *= amplitude;
-  position += start_position;
+  _position  = (sin(_position) + 1) * 0.5;
+  _position *= amplitude;
+  _position += start_position;
 }
 
 
@@ -131,8 +145,8 @@ void Grower::update ()
 
 /*** Warper Methods ********************************************/
 
-Warper::Warper (double n_position, uint8_t n_width, uint32_t n_color):
-  Spot(n_position, n_width, n_color) /* Base Class Constructor */
+Warper::Warper ( ):
+  Spot(0.0, 1, led_strip.Color (5, 0, 5)) /* Base Class Constructor */
 {
 	tick_start = millis();
 }
@@ -143,20 +157,21 @@ void Warper::update ()
 	if(millis() - tick_start > speed * 1000)
 	{
 		tick_start = millis();
-		position = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		_position = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 	}
 }
 
 /*** Colortron Methods ********************************************/
 
-Colortron::Colortron (double n_position, uint8_t n_width, uint32_t n_color):
-  Spot(n_position, n_width, n_color) /* Base Class Constructor */
+Colortron::Colortron (uint8_t n_width, uint32_t n_color):
+  Spot(0.0, n_width, n_color) /* Base Class Constructor */
 {
 	tick_start = millis();
 }
 
 void Colortron::update ()
 {
+	// TODO take into account offset (for chained delays) and amplitude (variation)
 	if(millis() - tick_start > speed * 1000)
 	{
 		tick_start = millis();
