@@ -23,6 +23,8 @@ class Spot {
   uint8_t  start_width;
   uint32_t start_color;
 
+  uint32_t tick_start;
+
   // Constructor
   Spot (double, uint8_t, uint32_t);
 
@@ -91,7 +93,13 @@ class Grower : public Spot {
 // Colortron grabs random colors each cycle and has fluid width
 
 class Colortron : public Spot {
+ public:
 
+  // Constructor
+  Colortron (double, uint8_t, uint32_t);
+
+  // Methods
+  void update ();
 };
 
 
@@ -99,7 +107,13 @@ class Colortron : public Spot {
 // Warper picks random locations each cycle
 
 class Warper : public Spot {
+ public:
 
+  // Constructor
+  Warper (double, uint8_t, uint32_t);
+
+  // Methods
+  void update ();
 };
 
 #endif

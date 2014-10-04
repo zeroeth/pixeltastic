@@ -88,20 +88,20 @@ namespace Theme {
     outer_ring.add (wobble0);
     outer_ring.add (wobble1);
     outer_ring.add (wobble2);
-    
-    
+
+
      Circler* circle1 = new Circler (/* position */ 0.0,
                                     /* width    */ 1,
                                     /* color    */ cyan);
-                                     
+
     Circler* circle2 = new Circler (/* position */ 0.16,
                                     /* width    */ 1,
                                     /* color    */ white);
-                                    
+
      Circler* circle3 = new Circler (/* position */ 0.32,
                                     /* width    */ 1,
                                     /* color    */ cyan);
-                                     
+
     Circler* circle4 = new Circler (/* position */ 0.48,
                                     /* width    */ 1,
                                     /* color    */ white);
@@ -109,11 +109,11 @@ namespace Theme {
      Circler* circle5 = new Circler (/* position */ 0.64,
                                     /* width    */ 1,
                                     /* color    */ cyan);
-                                     
+
     Circler* circle6 = new Circler (/* position */ 0.82,
                                     /* width    */ 1,
-                                    /* color    */ white);                                    
-                                    
+                                    /* color    */ white);
+
 	// TODO api 2.. shared 'speed' for multiples?
 
 	circle1->speed = 0.3;
@@ -131,7 +131,7 @@ namespace Theme {
     inner_ring.add(circle6);
 
   }
-  
+
   void theme3() {
 
     Grower* grower1 =  new Grower (/* position */ 0.0,
@@ -145,8 +145,8 @@ namespace Theme {
     outer_ring.add (grower1);
     inner_ring.add (grower2);
   }
-  
-  
+
+
   void theme4() {
 
     Pulsar* pulsar1 =  new Pulsar (/* position */ 0.0,
@@ -169,14 +169,26 @@ namespace Theme {
 
 
   void theme5() {
-	Colortron* colortron = new Colortron(0.0, 0.5, blue);
 
+	Warper* warper = new Warper(1.0, 1, magenta);
+	warper->speed = 0.1;
+
+	Colortron* colortron = new Colortron(/* position */ 0.0,
+										 /* width    */ 6 /* 0.5 */,
+										 /* color    */ blue);
+
+	/*
+		warper->position = 0.0;
+		warper->width    = 0.5;
+		warper->color    = blue;
+
+		warper->position ( 0.0  );
+		warper->width    ( 0.5  );
+		warper->color    ( blue );
+	 */
+
+	inner_ring.add (warper);
 	outer_ring.add (colortron);
-
-
-	Warper* warper = new Warper(0.0, 4, magenta);
-
-	inner_ring.add (warper)
   }
 
 
@@ -193,17 +205,17 @@ namespace Theme {
       switch(current_theme)
       {
         case 0:
-          theme2();
+          theme5();
           break;
 
         case 1:
           theme2 ();
           break;
-          
+
         case 2:
           theme3 ();
           break;
-          
+
         case 3:
           theme4 ();
           break;

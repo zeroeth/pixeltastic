@@ -25,3 +25,8 @@ wiggler->motion(LINEAR); // or cubic function?
 
 # sample grid
 # (sample rotating line for pov on grid)
+
+# random tweening, so it moves between values (ie position) smoothly
+
+# allow widths to be composits of multiple objects (or just have a factory?)
+# ex for gradients out from the center.. or random colorfades along a wide spot?

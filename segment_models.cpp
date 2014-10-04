@@ -127,3 +127,41 @@ void Grower::update ()
   width = value * start_width;
 
 }
+
+
+/*** Warper Methods ********************************************/
+
+Warper::Warper (double n_position, uint8_t n_width, uint32_t n_color):
+  Spot(n_position, n_width, n_color) /* Base Class Constructor */
+{
+	tick_start = millis();
+}
+
+
+void Warper::update ()
+{
+	if(millis() - tick_start > speed * 1000)
+	{
+		tick_start = millis();
+		position = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	}
+}
+
+/*** Colortron Methods ********************************************/
+
+Colortron::Colortron (double n_position, uint8_t n_width, uint32_t n_color):
+  Spot(n_position, n_width, n_color) /* Base Class Constructor */
+{
+	tick_start = millis();
+}
+
+void Colortron::update ()
+{
+	if(millis() - tick_start > speed * 1000)
+	{
+		tick_start = millis();
+
+		color = led_strip.Color (rand() % 10, rand() % 10, rand() % 10);
+	}
+}
+
