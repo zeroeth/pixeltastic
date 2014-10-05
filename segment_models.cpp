@@ -155,6 +155,18 @@ Pulsar::Pulsar (double n_position, uint8_t n_width, uint32_t n_color):
   start_color = _color;
 }
 
+Pulsar::Pulsar ( ):
+  Spot(0.0, 1, led_strip.Color (5, 0, 5)) /* Base Class Constructor */
+{
+  start_color = _color;
+}
+
+uint32_t Pulsar::color(uint32_t n_color)
+{
+	start_color = n_color;
+	return _color = n_color;
+}
+
 void Pulsar::update ()
 {
   double value = percent () * M_PI * 2;

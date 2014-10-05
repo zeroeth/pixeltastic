@@ -90,9 +90,12 @@ class Pulsar : public Spot {
 
   // Constructor
   Pulsar (double, uint8_t, uint32_t);
+  Pulsar ( );
 
   // Methods
   void update ();
+
+  uint32_t color(uint32_t);
 };
 
 

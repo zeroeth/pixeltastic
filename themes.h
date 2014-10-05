@@ -32,6 +32,7 @@ namespace Theme {
 
   uint32_t blue    = led_strip.Color (0, 1, 5);
   uint32_t magenta = led_strip.Color (5, 0, 5);
+  uint32_t purple  = led_strip.Color (1, 0, 3);
 
   uint32_t pink    = led_strip.Color (5, 0, 1);
 
@@ -176,19 +177,20 @@ namespace Theme {
   // Test Warper and Colortron with offset
   void theme5()
   {
+	Pulsar* pulsar = new Pulsar ( );
+	// TODO this pulsar should fade 'opacity' so the blur can still be seen on the green spots
+
+	pulsar->position ( 0.0    );
+	pulsar->width    ( 1.0    );
+	pulsar->color    ( purple );
+
 	Warper* warper = new Warper ( );
 
-	warper->position ( 0.0  );
-	warper->width    ( 6    );
-	warper->color    ( blue );
-
-	Warper* warper2 = new Warper ( );
-
-	warper2->position ( 0.0 );
-	warper2->width    ( 2   );
-	warper2->color    ( magenta );
-	// should 2 mean 2x?
-	warper2->speed    ( 1/3.0 );
+	warper->position ( 0.0 );
+	warper->width    ( 1   );
+	warper->color    ( green );
+	// should 2.0 mean 2x?
+	warper->speed    ( 1/50.0 );
 
 
 	// TODO make these 'pulse' and fade out every second
@@ -216,8 +218,8 @@ namespace Theme {
 	colortron4->width    ( 0.25 );
 	colortron4->offset   ( 0.3  );
 
+	inner_ring.add (pulsar);
 	inner_ring.add (warper);
-	inner_ring.add (warper2);
 	outer_ring.add (colortron);
 	outer_ring.add (colortron2);
 	outer_ring.add (colortron3);
@@ -239,11 +241,11 @@ namespace Theme {
     Circler* slow_circle = new Circler (/* position */ 0.0,
                                     /* width    */ 1,
                                     /* color    */ cyan);
-	trace_one->speed(0.2);
-	trace_two->speed(0.2);
+	trace_one->speed(0.1);
+	trace_two->speed(0.1);
 	// FIXME Causes rendering bug
-	trace_one->amplitude = 5;
-	trace_two->amplitude = 5;
+	trace_one->amplitude = 7;
+	trace_two->amplitude = 7;
 
 	slow_circle->speed(0.1);
 

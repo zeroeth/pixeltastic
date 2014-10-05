@@ -21,6 +21,7 @@ class StripView {
 
   uint32_t last_clear_time;
   uint32_t motion_blur_time;
+  uint8_t  clear_amount;
 
   // Constructor
   StripView (Adafruit_NeoPixel&, uint8_t, uint8_t);

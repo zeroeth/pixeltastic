@@ -23,7 +23,8 @@ StripView::StripView (Adafruit_NeoPixel& n_strip, uint8_t n_starting_led, uint8_
   length (n_length),
   spot_count (0), /* Initializer list */
   last_clear_time (0),
-  motion_blur_time (0)
+  motion_blur_time (0),
+  clear_amount (1)
 {
 }
 
@@ -56,7 +57,7 @@ void StripView::draw ()
   for (uint8_t i = 0; i < spot_count; i++)
   {
 	// FIXME uint8 limits size for larger projects.
-	uint8_t width;
+	uint16_t width;
 
 	// Fluid (0.0->1.0) vs Fixed (pixel count) widths
 	if(spots[i]->fixed_width)
@@ -69,10 +70,10 @@ void StripView::draw ()
 	}
 
     // For width of the spot
-    for (uint8_t w = 0; w < width; w++)
+    for (uint16_t w = 0; w < width; w++)
     {
       // Map position to strip
-      int8_t view_position = int(spots[i]->position() * length) + w;
+      int16_t view_position = int(spots[i]->position() * length) + w;
 
       // Center width
       view_position -= width/2;
@@ -91,8 +92,6 @@ void StripView::draw ()
 
 void StripView::clear ()
 {
-  // Delay buffer clearing since we remove 1 rgb value per clear. (Alternatively use float values)
-  // more than 1 for harsher fx.
   if(millis() - last_clear_time > motion_blur_time) {
 	  last_clear_time = millis();
 
@@ -105,16 +104,12 @@ void StripView::clear ()
 		g = (uint8_t)(start_color >>  8),
 		b = (uint8_t)(start_color >>  0);
 
-		// Dim brightness FIXME fails to gracefully fade dim colors (because it runs a lot per second)
-		//uint32_t color = strip.Color (r * 0.9, g * 0.9, b * 0.9);
-
-		if(r > 0) { r -= 1; }
-		if(g > 0) { g -= 1; }
-		if(b > 0) { b -= 1; }
+		if(r - clear_amount < 0) { r = 0; } else { r -= clear_amount; }
+		if(g - clear_amount < 0) { g = 0; } else { g -= clear_amount; }
+		if(b - clear_amount < 0) { b = 0; } else { b -= clear_amount; }
 		uint32_t color = strip.Color (r, g, b);
 
 		strip.setPixelColor (i, color);
-		//strip.setPixelColor (i, strip.Color(0,0,0));
 	  }
   }
 }
