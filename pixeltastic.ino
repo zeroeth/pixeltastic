@@ -37,7 +37,13 @@ void setup ()
 
   led_strip.begin ();
 
-  whole_loop.motion_blur_time = 20;
+  inner_ring.motion_blur_time = 0;
+  outer_ring.motion_blur_time = 20;
+  whole_loop.motion_blur_time = 0;
+
+  inner_ring.clear_amount = 255;
+  outer_ring.clear_amount = 1;
+  whole_loop.clear_amount = 0;
 
   Theme::switch_every (THEME_SWITCH_DELAY);
 }
@@ -51,7 +57,9 @@ void loop ()
   // Switch themes every {x} seconds
   //Theme::switch_every (THEME_SWITCH_DELAY);
 
-  // Clear individual views once blending is in place
+  // TODO abstract a way to clear each layers pixel values (with opacity)
+  outer_ring.clear ();
+  inner_ring.clear ();
   whole_loop.clear ();
 
   // Update the spots

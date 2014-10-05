@@ -34,3 +34,9 @@ wiggler->motion(LINEAR); // or cubic function?
 # sequencing effects (and tweening)
 
 # TODO emscripten hook to visualize/edit
+
+# Add readme, and make into a zip-droppable library for arduino + example.
+
+# 'Twinkler' that fades out and then finds a new position
+
+# amplitude vs width vs frequency. which names make sense for different effects
