@@ -21,7 +21,9 @@ StripView::StripView (Adafruit_NeoPixel& n_strip, uint8_t n_starting_led, uint8_
   strip (n_strip),
   starting_led (n_starting_led),
   length (n_length),
-  spot_count (0) /* Initializer list */
+  spot_count (0), /* Initializer list */
+  last_clear_time (0),
+  motion_blur_time (0)
 {
 }
 
@@ -76,7 +78,10 @@ void StripView::draw ()
       view_position -= width/2;
 
       // Wrap around the segment
+	  // TODO add_at for color blending
       draw_at (modulo(view_position,length) + starting_led, spots[i]->color());
+
+	  // Render into next pixel
     }
   }
 }
@@ -86,24 +91,35 @@ void StripView::draw ()
 
 void StripView::clear ()
 {
-  for(uint8_t i = starting_led; i < (starting_led+length); i++)
-  {
-    /*
-    uint32_t start_color = strip.getPixelColor (i);
-    uint8_t r,g,b;
+  // Delay buffer clearing since we remove 1 rgb value per clear. (Alternatively use float values)
+  // more than 1 for harsher fx.
+  if(millis() - last_clear_time > motion_blur_time) {
+	  last_clear_time = millis();
 
-    r = (uint8_t)(start_color >> 16),
-    g = (uint8_t)(start_color >>  8),
-    b = (uint8_t)(start_color >>  0);
+	  for(uint8_t i = starting_led; i < (starting_led+length); i++)
+	  {
+		uint32_t start_color = strip.getPixelColor (i);
+		uint8_t r,g,b;
 
-    // Dim brightness FIXME fails to gracefully fade dim colors (because it runs a lot per second)
-    uint32_t color = strip.Color (r * 0.9, g * 0.9, b * 0.9);
+		r = (uint8_t)(start_color >> 16),
+		g = (uint8_t)(start_color >>  8),
+		b = (uint8_t)(start_color >>  0);
 
-    strip.setPixelColor (i, color);*/
-    strip.setPixelColor (i, strip.Color(0,0,0));
+		// Dim brightness FIXME fails to gracefully fade dim colors (because it runs a lot per second)
+		//uint32_t color = strip.Color (r * 0.9, g * 0.9, b * 0.9);
+
+		if(r > 0) { r -= 1; }
+		if(g > 0) { g -= 1; }
+		if(b > 0) { b -= 1; }
+		uint32_t color = strip.Color (r, g, b);
+
+		strip.setPixelColor (i, color);
+		//strip.setPixelColor (i, strip.Color(0,0,0));
+	  }
   }
 }
 
+// TODO draw and clear into virtual buffers so that motion blur is per view and all views are blended
 
 // Draw a color into the strip
 

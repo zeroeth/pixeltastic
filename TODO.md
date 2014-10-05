@@ -30,3 +30,7 @@ wiggler->motion(LINEAR); // or cubic function?
 
 # allow widths to be composits of multiple objects (or just have a factory?)
 # ex for gradients out from the center.. or random colorfades along a wide spot?
+
+# sequencing effects (and tweening)
+
+# TODO emscripten hook to visualize/edit

@@ -132,7 +132,10 @@ namespace Theme {
 
   }
 
-  void theme3() {
+
+  // Grower on each view
+  void theme3()
+  {
 
     Grower* grower1 =  new Grower (/* position */ 0.0,
                                    /* width    */ 24,
@@ -147,7 +150,9 @@ namespace Theme {
   }
 
 
-  void theme4() {
+  // Full view pulsar
+  void theme4()
+  {
 
     Pulsar* pulsar1 =  new Pulsar (/* position */ 0.0,
                                    /* width    */ 24,
@@ -162,13 +167,15 @@ namespace Theme {
                                    /* color    */ green);
 
 
-    //outer_ring.add (pulsar1);
-    //inner_ring.add (pulsar2);
+    outer_ring.add (pulsar1);
+    inner_ring.add (pulsar2);
     whole_loop.add (pulsar3);
   }
 
 
-  void theme5() {
+  // Test Warper and Colortron with offset
+  void theme5()
+  {
 	Warper* warper = new Warper ( );
 
 	warper->position ( 0.0  );
@@ -218,11 +225,40 @@ namespace Theme {
   }
 
 
+  // Circlers to test sub pixel rendering and fading.
+  void theme6()
+  {
+    Wobbler* trace_one = new Wobbler (/* position */ 0.0,
+                                      /* width    */ 1,
+                                      /* color    */ magenta);
+
+    Wobbler* trace_two = new Wobbler (/* position */ 0.5,
+                                      /* width    */ 1,
+                                      /* color    */ blue);
+
+    Circler* slow_circle = new Circler (/* position */ 0.0,
+                                    /* width    */ 1,
+                                    /* color    */ cyan);
+	trace_one->speed(0.2);
+	trace_two->speed(0.2);
+	// FIXME Causes rendering bug
+	trace_one->amplitude = 5;
+	trace_two->amplitude = 5;
+
+	slow_circle->speed(0.1);
+
+    outer_ring.add (trace_one);
+    outer_ring.add (trace_two);
+    inner_ring.add (slow_circle);
+  }
+
+
   void switch_every (uint16_t delay)
   {
-	  theme5();
+	  theme6();
 	  /*
     if(millis() - last_millis > delay)
+
     {
       last_millis = millis();
 
@@ -233,7 +269,7 @@ namespace Theme {
       switch(current_theme)
       {
         case 0:
-          theme5();
+          theme1 ();
           break;
 
         case 1:
@@ -248,12 +284,20 @@ namespace Theme {
           theme4 ();
           break;
 
+        case 4:
+          theme5 ();
+          break;
+
+        case 5:
+          theme6 ();
+          break;
+
         default:
           break;
       }
 
-      //current_theme++;
-      //current_theme %= 4;
+      current_theme++;
+      current_theme %= 6;
     } */
   }
 }

@@ -14,7 +14,7 @@ Spot::Spot (double n_position, uint8_t n_width, uint32_t n_color):
   amplitude (1.0),
   _offset   (0.0),
   _fluid_width (0.0),
-  fixed_width  (false)
+  fixed_width  (true)
 {
 }
 

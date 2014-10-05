@@ -19,6 +19,8 @@ class StripView {
   Spot *spots[10];
   uint8_t spot_count;
 
+  uint32_t last_clear_time;
+  uint32_t motion_blur_time;
 
   // Constructor
   StripView (Adafruit_NeoPixel&, uint8_t, uint8_t);

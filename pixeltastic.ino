@@ -37,7 +37,8 @@ void setup ()
 
   led_strip.begin ();
 
-  Serial.begin(9600);
+  whole_loop.motion_blur_time = 20;
+
   Theme::switch_every (THEME_SWITCH_DELAY);
 }
 
@@ -48,7 +49,9 @@ void setup ()
 void loop ()
 {
   // Switch themes every {x} seconds
+  //Theme::switch_every (THEME_SWITCH_DELAY);
 
+  // Clear individual views once blending is in place
   whole_loop.clear ();
 
   // Update the spots
