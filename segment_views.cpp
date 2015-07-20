@@ -3,18 +3,6 @@
 
 // Replacement for C 'remainder' % operator that has continuous behavior instead of mirror/flipped about 0
 
-int modulo(int dividend, int divisor)
-{
-    int remainder = dividend % divisor;
-
-	if(remainder < 0) {
-		return remainder + divisor;
-	}
-
-	return remainder;
-}
-
-
 // StripView Constructor
 
 StripView::StripView (Adafruit_NeoPixel& n_strip, uint8_t n_starting_led, uint8_t n_length):

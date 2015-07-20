@@ -6,6 +6,8 @@
 
 extern Adafruit_NeoPixel led_strip; /* FIXME temporary global */
 
+int modulo(int, int);
+
 // Spot class: Everything is derived from this static spot
 
 class Spot {

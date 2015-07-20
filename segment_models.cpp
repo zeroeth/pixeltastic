@@ -24,12 +24,23 @@ Spot::Spot (double n_position, uint8_t n_width, uint32_t n_color):
 
 void Spot::update () { }
 
+int modulo(int dividend, int divisor)
+{
+    int remainder = dividend % divisor;
+
+	if(remainder < 0) {
+		return remainder + divisor;
+	}
+
+	return remainder;
+}
 
 // Return a 0.0 to 1.0 scaled over {speed} + {offset} seconds
 
 double Spot::percent ()
 {
-  return (int((millis() * _speed) + (_offset*1000)) % 1000) * 0.001;
+	double percent = modulo((unsigned long)((millis() * _speed) + (_offset*1000)), 1000) / 1000.0;
+	return percent;
 }
 
 // Accessors
