@@ -27,7 +27,7 @@ class Spot {
   uint8_t  start_width;
   uint32_t start_color;
 
-  uint32_t tick_start;
+  uint64_t tick_start;
 
   // Constructor
   Spot (double, uint8_t, uint32_t);
